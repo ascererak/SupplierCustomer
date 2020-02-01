@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../SupplierCustomer.DAL/SupplierCustomer.DAL.csproj"/>
+    <ProjectReference Include="../SupplierCustomer.DAL/SupplierCustomer.DAL.csproj" />
+    <ProjectReference Include="..\SupplierCustomer.Contracts\SupplierCustomer.Contracts.csproj" />
   </ItemGroup>
 </Project>

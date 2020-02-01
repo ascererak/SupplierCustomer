@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SupplierCustomer.Contracts.Models
 {
-    public class LogInResponseModel
+    public class AuthorizationResponseModel
     {
         public bool IsSuccessful { get; set; }
 

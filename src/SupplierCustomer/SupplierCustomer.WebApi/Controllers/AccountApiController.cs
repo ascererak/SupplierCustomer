@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SupplierCustomer.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SupplierCustomer.Contracts.Models;
 
 namespace SupplierCustomer.WebApi.Controllers
 {
@@ -18,7 +18,7 @@ namespace SupplierCustomer.WebApi.Controllers
             this.accountService = accountService;
         }
 
-        Route("register")]
+        [Route("register")]
         [HttpPost]
         public async Task<IActionResult> Register(RegistrationRequestModel userData)
             => Json(await accountService.RegisterAsync(userData));
