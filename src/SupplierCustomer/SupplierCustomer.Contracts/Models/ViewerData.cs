@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SupplierCustomer.Contracts.Models
 {
-    public class ViewerAccountModel
+    public class ViewerData
     {
 
     }

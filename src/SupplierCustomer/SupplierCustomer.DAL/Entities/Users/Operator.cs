@@ -5,11 +5,7 @@ using System.Text;
 
 namespace SupplierCustomer.DAL.Entities.Users
 {
-    internal class Operator
+    internal class Operator : UserBase
     {
-        public int Id { get; set; }
-
-        [ForeignKey("User")]
-        public int UserId { get; set; }
     }
 }

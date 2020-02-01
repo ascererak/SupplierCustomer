@@ -5,11 +5,7 @@ using System.Text;
 
 namespace SupplierCustomer.DAL.Entities.Users
 {
-    internal class Viewer
+    internal class Viewer : UserBase
     {
-        public int Id { get; set; }
-
-        [ForeignKey("User")]
-        public int UserId { get; set; }
     }
 }

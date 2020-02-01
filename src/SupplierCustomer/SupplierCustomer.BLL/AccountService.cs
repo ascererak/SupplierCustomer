@@ -13,32 +13,30 @@ namespace SupplierCustomer.BLL
         private readonly IApplicationUserRepository applicationUserRepository;
         private readonly ISessionRepository sessionRepository;
         private readonly IJavascriptWebTokenFactory javascriptWebTokenFactory;
-        private readonly IClientRepository clientRepository;
+        private readonly IUserRepository userRepository;
         private readonly IApplicationRoleRepository applicationRoleRepository;
         private readonly ISessionHandler sessionHandler;
-
+        
         public AccountService(
             IApplicationUserRepository applicationUserRepository,
             ISessionRepository sessionRepository,
-            IClientRepository clientRepository,
+            IUserRepository userRepository,
             IJavascriptWebTokenFactory javascriptWebTokenFactory,
             IApplicationRoleRepository applicationRoleRepository,
-            ISessionHandler sessionHandler,
-            ICreditCardRepository creditCardRepository)
+            ISessionHandler sessionHandler)
         {
             this.applicationUserRepository = applicationUserRepository;
             this.sessionRepository = sessionRepository;
             this.javascriptWebTokenFactory = javascriptWebTokenFactory;
-            this.clientRepository = clientRepository;
+            this.userRepository = userRepository;
             this.applicationRoleRepository = applicationRoleRepository;
             this.sessionHandler = sessionHandler;
-            this.creditCardRepository = creditCardRepository;
         }
 
         public async Task<AuthorizationResponseModel> RegisterAsync(AuthorizationRequestModel registrationModel)
         {
             RoleData role = applicationRoleRepository.Get(registrationModel.Role);
-            RegistrationResponseModel response = new RegistrationResponseModel() { IsSuccessful = false, Message = string.Empty };
+            AuthorizationResponseModel response = new AuthorizationResponseModel() { IsSuccessful = false, Message = string.Empty };
             var userData = new UserData
             {
                 Email = registrationModel.Email,
@@ -55,17 +53,16 @@ namespace SupplierCustomer.BLL
             }
 
             userData = await applicationUserRepository.FindByEmailAsync(userData.Email);
-            ClientData client = new ClientData()
+            BasicUserData viewer = new BasicUserData()
             {
-                Name = registrationModel.UserName,
-                Surname = registrationModel.Surname,
-                PhotoPath = "default/profile.png",
-                UserId = userData.Id
+                Email = registrationModel.Email,
+                UserId = userData.Id,
+                RoleId = role.Id
             };
-            ClientData addedClient = await clientRepository.AddAsync(client);
+            ViewerData addedClient = await userRepository.AddAsync(viewer);
             if (addedClient == null)
             {
-                response.Message = "Client not added";
+                response.Message = "User not added";
             }
             response.IsSuccessful = true;
             string token = javascriptWebTokenFactory.Create(userData.Id);
@@ -110,23 +107,12 @@ namespace SupplierCustomer.BLL
             return response;
         }
 
-        public async Task<AuthorizationRequestModel> GetClientAccountAsync(string token)
+        public async Task<UserData> GetClientAccountAsync(string token)
         {
             SessionData session = await sessionRepository.GetByTokenAsync(token);
-            User user = await applicationUserRepository.FindByIdAsync(session.UserId);
-            ClientData client = clientRepository.FindByUser(user);
-            var account = new ClientAccountModel()
-            {
-                Email = user.Email,
-                Passport = client.Passport,
-                Telephone = client.Telephone,
-                Name = client.Name,
-                Surname = client.Surname,
-                PhotoPath = client.PhotoPath,
-                Role = applicationRoleRepository.Get(user.RoleId).Name,
-                CreditCards = await creditCardRepository.GetByClientAsync(client.Id)
-            };
-            return account;
+            UserData user = await applicationUserRepository.FindByIdAsync(session.UserId);
+            
+            return user;
         }
 
         public async Task LogoutAsync(SessionData sessionData) => await sessionRepository.RemoveAsync(sessionData);

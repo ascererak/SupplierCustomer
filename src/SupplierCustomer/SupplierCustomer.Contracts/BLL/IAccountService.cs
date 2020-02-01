@@ -12,7 +12,7 @@ namespace SupplierCustomer.Contracts.BLL
 
         Task<AuthorizationResponseModel> LogInAsync(AuthorizationRequestModel logInRequestModel);
 
-        Task<AuthorizationRequestModel> GetClientAccountAsync(string token);
+        Task<UserData> GetClientAccountAsync(string token);
 
         Task LogoutAsync(SessionData data);
     }
