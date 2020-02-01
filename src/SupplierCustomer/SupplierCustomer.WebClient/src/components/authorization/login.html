@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<!-- saved from url=(0027)http://localhost:3000/login -->
+<html lang="en" class="gr__localhost">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="shortcut icon" href="http://localhost:3000/favicon.ico">
+    <link rel="stylesheet" href="./login_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./login_files/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="http://localhost:3000/manifest.json">
+    <!--
+      Notice the use of  in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+    <style type="text/css">body {
+        height: 100%;
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+        sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    html {
+        height: 100%;
+    }
+
+    code {
+        font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
+    }
+
+    #root {
+        height: 100%;
+    }
+    </style>
+    <style type="text/css">.header-image {
+        max-width: 100%;
+    }
+
+    .header-image-buttons {
+        position: relative;
+    }
+
+    .toolbar {
+        width: 100%;
+    }
+
+    .toolbar-navigation {
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+
+    .toolbar-items {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .toolbar-item {
+        padding: 7px 10px;
+    }
+
+    #links {
+        position: absolute;
+        width: 250px;
+        top: 15%;
+        right: 0;
+    }
+
+    .link {
+        background-color: #555;
+        color: white;
+        font-size: 16px;
+        padding: 8px 24px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        margin: 3px;
+    }
+
+    .link:hover {
+        background-color: #777;
+        color: white;
+    }
+
+    .profile-icon {
+        position: absolute;
+        width: 250px;
+        height: 80px;
+        top: 8%;
+        right: 0;
+        background: rgba(255, 255, 255, 0.5);
+    }
+
+    .user-welcome {
+        font-weight: bolder;
+    }
+
+    .profileIconImage {
+        width: 36px;
+        height: 36px;
+    }
+
+    .profileIconImage:hover {
+        width: 40px;
+        height: 40px;
+    }
+
+    @media (max-width: 770px) {
+        .toolbar-items,
+        #links,
+        .user-welcome,
+        .logout-button {
+            display: none;
+        }
+
+        .profile-icon {
+            background: transparent;
+            width: 60px;
+            top: 10%;
+        }
+
+        .profile-icon button {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+    }
+
+    @media (max-width: 320px) {
+        .profileIconImage {
+            width: 30px;
+            height: 30px;
+        }
+    }
+    </style>
+    <style type="text/css">.toggle-button {
+        height: 30px;
+        width: 40px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        margin: 4px 8px;
+        padding: 0;
+        box-sizing: border-box;
+        justify-content: space-around;
+    }
+
+    .toggle-button:focus {
+        outline: none;
+    }
+
+    .toggle-button-line {
+        width: 25px;
+        height: 3px;
+        background: #10abb0;
+    }
+
+    .side-drawer {
+        height: 100%;
+        background: #f5f7f7;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 70%;
+        max-width: 300px;
+        min-width: 130px;
+        z-index: 200;
+    }
+
+    .side-drawer ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .side-drawer li {
+        margin: 10px 0;
+    }
+
+    @media (min-width: 771px) {
+        .side-drawer,
+        .toggle-button {
+            display: none;
+        }
+    }
+    </style>
+    <style type="text/css">
+
+        .App-logo {
+            animation: App-logo-spin infinite 20s linear;
+            height: 40vmin;
+            pointer-events: none;
+        }
+
+        .App-header {
+            background-color: #282c34;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: calc(10px + 2vmin);
+            color: white;
+        }
+
+        .App-link {
+            color: #61dafb;
+        }
+
+        @keyframes App-logo-spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }</style>
+    <style type="text/css">.loginform {
+        min-width: 200px;
+        background-color: white;
+    }
+
+    .btn-block {
+        margin-bottom: 10px;
+        margin-top: 5px;
+    }
+    </style>
+    <style type="text/css">.registration-form {
+        min-width: 200px;
+        background-color: white;
+    }
+
+    .form-control {
+        margin-bottom: 10px;
+    }
+    </style>
+    <style type="text/css">.backdrop {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 100;
+        top: 0;
+        left: 0;
+    }
+    </style>
+    <style type="text/css">.personal-info-form {
+        min-width: 225px;
+    }
+
+    .credit-cards ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .credit-cards li {
+        margin: 5px 0;
+        position: relative;
+    }
+
+    .adding-card-block,
+    .credit-cards {
+        padding: 5px 10px;
+        margin: 1% 0;
+        border: solid 1px rgb(216, 214, 214);
+    }
+
+    .profile-image {
+        width: 60%;
+        margin: 0 20%;
+    }
+
+    .personal-info {
+        min-width: 200px;
+        flex-basis: 0;
+        flex-grow: 14;
+        padding: 0 15px;
+    }
+
+    .photo-and-cards {
+        min-width: 220px;
+        flex-basis: 0;
+        flex-grow: 10;
+        padding: 0 15px;
+    }
+
+    .submit-button-block {
+        margin: 15px;
+    }
+
+    .deletion-button {
+        color: red;
+        padding: 3px;
+        cursor: pointer;
+    }
+
+    .card-number {
+        border: solid 1px rgb(216, 214, 214);
+        border-radius: 4%;
+        padding: 5px 12px;
+        width: 92%;
+        display: inline-block;
+    }
+
+    .deletion-button:hover {
+        transform: scale(1.4);
+    }
+
+    .edit-photo-button {
+        width: 100px;
+    }
+    </style>
+    <style type="text/css">.react-tabs {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .react-tabs__tab-list {
+        border-bottom: 1px solid #aaa;
+        margin: 0 0 10px;
+        padding: 0;
+    }
+
+    .react-tabs__tab {
+        display: inline-block;
+        border: 1px solid transparent;
+        border-bottom: none;
+        bottom: -1px;
+        position: relative;
+        list-style: none;
+        padding: 6px 12px;
+        cursor: pointer;
+    }
+
+    .react-tabs__tab--selected {
+        background: #fff;
+        border-color: #aaa;
+        color: black;
+        border-radius: 5px 5px 0 0;
+    }
+
+    .react-tabs__tab--disabled {
+        color: GrayText;
+        cursor: default;
+    }
+
+    .react-tabs__tab:focus {
+        box-shadow: 0 0 5px hsl(208, 99%, 50%);
+        border-color: hsl(208, 99%, 50%);
+        outline: none;
+    }
+
+    .react-tabs__tab:focus:after {
+        content: "";
+        position: absolute;
+        height: 5px;
+        left: -4px;
+        right: -4px;
+        bottom: -5px;
+        background: #fff;
+    }
+
+    .react-tabs__tab-panel {
+        display: none;
+    }
+
+    .react-tabs__tab-panel--selected {
+        display: block;
+    }
+    </style>
+    <style type="text/css">.hotel-name a:link {
+        color: rgb(7, 100, 100);
+        font-style: italic;
+        font-size: 150%;
+    }
+
+    .hotel-name a:visited {
+        color: rgb(2, 44, 44);
+        font-style: italic;
+        font-size: 150%;
+    }
+
+    .hotel-name a:hover {
+        color: rgb(7, 117, 117);
+        text-decoration: none;
+        font-style: italic;
+        font-size: 160%;
+    }
+
+    .hotel-name a:active {
+        color: rgb(5, 77, 77);
+        font-style: italic;
+        font-size: 150%;
+    }
+
+    .price {
+        font-style: italic;
+        color: rgb(5, 77, 77);
+        font-size: 170%;
+    }
+    </style>
+    <style type="text/css">.hotel:hover {
+        border: solid 2px rgb(5, 114, 114);
+        border-radius: 5%;
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+
+    .hotel {
+        padding: 3px;
+        border: solid 1px rgb(8, 156, 156);
+        border-radius: 5%;
+    }
+
+    .container-room {
+        margin-top: 10px;
+    }
+
+    img {
+        margin-top: 5px;
+    }
+
+    .hotel-image {
+        width: 100%;
+    }
+
+    .search-form {
+        max-width: 370px;
+        min-width: 288px;
+    }
+
+    .hotels-box {
+        min-width: 300px;
+    }
+
+    .hotel-link {
+        text-decoration: none;
+        color: rgb(8, 156, 156);
+        font-style: italic;
+        font-size: 105%;
+        font-weight: 600;
+    }
+
+    .hotel-link:hover {
+        text-decoration: none;
+        color: rgb(5, 114, 114);
+    }
+
+    .disabled-button {
+        background-color: lightgray;
+    }
+
+    @media (min-width: 1200px) {
+        .hotel {
+            width: 28%;
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .hotel {
+            width: 40%;
+        }
+    }
+
+    @media (max-width: 1000px) {
+        .hotel {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 770px) {
+        .hotel {
+            width: 100%;
+        }
+
+        .search-form {
+            width: 100%;
+            max-width: 500px;
+        }
+    }
+    </style>
+    <style type="text/css">.pagination {
+        width: 100%;
+        margin: auto;
+    }
+
+    .pagination-panel {
+        display: inline-block;
+        list-style-type: none;
+        margin: auto;
+        padding: 5px 0;
+    }
+
+    .page {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+    }
+
+    .active-page {
+        background-color: rgb(27, 170, 170);
+        color: white;
+        border-radius: 5px;
+    }
+
+    .page:hover {
+        background-color: #ddd;
+        border-radius: 5px;
+    }
+    </style>
+</head>
+<body data-gr-c-s-loaded="true">
+<noscript>You need to enable JavaScript to run this app.</noscript>
+<div id="root">
+    <div class="container p-0 border" style="min-height: 100%;">
+        <div>
+            <div class="container p-0 header-image-buttons">
+                <div class="container" id="links"><a class="link" href="http://localhost:3000/login">Log in</a><a
+                        class="link" href="http://localhost:3000/registration">Register</a></div>
+                <picture>
+                    <source srcset="/static/media/picture.e8ee4236.jpg">
+                    <img class="header-image rounded" src="./login_files/picture.e8ee4236.jpg" alt="header hotel">
+                </picture>
+            </div>
+            <div class="toolbar">
+                <nav class="bg-light border toolbar-navigation">
+                    <div class="toggle-button">
+                        <button class="toggle-button">
+                            <div class="toggle-button-line"></div>
+                            <div class="toggle-button-line"></div>
+                            <div class="toggle-button-line"></div>
+                        </button>
+                    </div>
+                    <div class="toolbar-items">
+                        <div class="toolbar-item"><a href="http://localhost:3000/" style="">Hotels</a></div>
+                        <div class="toolbar-item"><a href="http://localhost:3000/map">Map</a></div>
+                        <div class="toolbar-item"><a href="http://localhost:3000/about">About</a></div>
+                        <div class="toolbar-item"><a href="http://localhost:3000/contacts">Contacts</a></div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <div class="container pt-5">
+            <div>
+                <form class="container col-5 border border-info rounded loginform"><h3 class="text-center p-2">Log
+                    in</h3>
+                    <div class="form-group"><label>Please, enter your email</label><input type="email"
+                                                                                          class="form-control"
+                                                                                          placeholder="e.g. user1@gmail.com"
+                                                                                          value="l@d.vp"><small
+                            class="text-danger"></small></div>
+                    <div class="form-group"><label>Please, enter your password</label><input type="password"
+                                                                                             class="form-control"
+                                                                                             placeholder="Password"
+                                                                                             value="Qwerty123"><small
+                            class="text-danger"></small></div>
+                    <p class="text-danger"></p>
+                    <button class="btn btn-info btn-block">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--
+  This HTML file is a template.
+  If you open it directly in the browser, you will see an empty page.
+
+  You can add webfonts, meta tags, or analytics to this file.
+  The build step will place the bundled scripts into the <body> tag.
+
+  To begin the development, run `npm start` or `yarn start`.
+  To create a production bundle, use `npm run build` or `yarn build`.
+-->
+<script src="./login_files/bundle.js.download"></script>
+<script src="./login_files/0.chunk.js.download"></script>
+<script src="./login_files/main.chunk.js.download"></script>
+
+</body>
+</html>
